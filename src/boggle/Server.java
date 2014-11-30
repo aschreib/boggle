@@ -1,5 +1,6 @@
 package boggle;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Server {
@@ -14,8 +15,10 @@ public class Server {
 	private ServerSocket serverSocket;
 	
 	//either have constructor or main to open connection - I think we should use a main, added one below
-	public Server(){
+	public Server() throws IOException{
 		dictionary = new Dictionary();
+		dice = new BoggleDice();
+		serverSocket = new ServerSocket(8770);
 	}
 	
 	
@@ -37,7 +40,7 @@ public class Server {
 		 */
 	}
 	
-	public static void main(String[]args){
+	public static void main(String[]args) throws IOException{
 		Server server = new Server();
 		
 	}
