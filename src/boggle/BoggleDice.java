@@ -29,7 +29,7 @@ public class BoggleDice {
 		Random randomGen = new Random();
 		int randomNum;
 		for (int i = 0; i < letterCubes.length; i++) {
-			randomNum = randomGen.nextInt(4);
+			randomNum = randomGen.nextInt(6);
 			letters[counter++] = letterCubes[i][randomNum];
 		}
 		// uses random gen in a double for-loop to select a letter from each die
