@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Server extends Thread {
 
@@ -83,7 +84,7 @@ public class Server extends Thread {
 		int playerNum = 1;
 		int player1Points = 0;
 		int player2Points = 0;
-		HashMap<String, Socket> playersValidWords = new HashMap<String, Socket>();
+		Map<String, Socket> playersValidWords = new HashMap<String, Socket>();
 
 		for (Socket c : Clients) {
 			InputStream in = c.getInputStream();
