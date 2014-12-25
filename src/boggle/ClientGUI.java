@@ -8,7 +8,7 @@ public class ClientGUI extends JFrame {
 
 	private JSplitPane splitPane;
 	private BoggleBoardPanel boggleBoard;
-	private WordsPanel wordsPanel;
+	private UserInputPanel wordsPanel;
 
 	private String tempWord;
 	private Client client;
@@ -20,7 +20,7 @@ public class ClientGUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boggleBoard = new BoggleBoardPanel(),
-				wordsPanel = new WordsPanel(this));
+				wordsPanel = new UserInputPanel(this));
 		splitPane.setDividerLocation(getWidth() / 2);
 		splitPane.setEnabled(false);
 		add(splitPane);
@@ -43,11 +43,11 @@ public class ClientGUI extends JFrame {
 		this.boggleBoard = boggleBoard;
 	}
 
-	public WordsPanel getWordsPanel() {
+	public UserInputPanel getWordsPanel() {
 		return wordsPanel;
 	}
 
-	public void setWordsPanel(WordsPanel wordsPanel) {
+	public void setWordsPanel(UserInputPanel wordsPanel) {
 		this.wordsPanel = wordsPanel;
 	}
 
