@@ -7,13 +7,14 @@ import javax.swing.JSplitPane;
 public class ClientGUI extends JFrame {
 
 	private JSplitPane splitPane;
+	
 	private BoggleBoardPanel boggleBoard;
 	private UserInputPanel wordsPanel;
 
 	private String tempWord;
 	private Client client;
 
-	public ClientGUI() {
+	public ClientGUI(Client client) {
 		setTitle("Boggle");
 		setSize(900, 500);
 		setLocationRelativeTo(null);
@@ -89,9 +90,5 @@ public class ClientGUI extends JFrame {
 	// include code that once a button is clicked the player can only click
 	// adjacent buttons
 
-	public static void main(String[] args) {
-		ClientGUI window = new ClientGUI();
-		window.setVisible(true);
-	}
 
 }

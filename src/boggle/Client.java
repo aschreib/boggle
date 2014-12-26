@@ -26,7 +26,8 @@ public class Client {
 	private Socket socket;
 
 	public Client() throws UnknownHostException, IOException {
-		ClientGUI gui = new ClientGUI();
+		ClientGUI gui = new ClientGUI(this);
+		gui.setVisible(true);
 		this.gui = gui;
 		socket = new Socket("127.0.0.1", 8770);
 		words = new ArrayList<String>();
@@ -57,6 +58,10 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[]args) throws UnknownHostException, IOException{
+		new Client();
 	}
 
 }

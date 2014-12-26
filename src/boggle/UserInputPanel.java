@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 public class UserInputPanel extends JPanel {
 	
 	private ClientGUI gui;
+	
 	private TimePanel timePanel;
 	private WordsPanel wordsPanel;
 	private SubmitPanel submitPanel;
@@ -18,29 +19,32 @@ public class UserInputPanel extends JPanel {
 	public UserInputPanel(ClientGUI gui) {
 		this.gui = gui;
 		
-		//wordsLabel = new JLabel("Words you have selected:");
-		//wordsLabel.setFont(new Font(Font.SERIF, Font.BOLD, 15));
 		timePanel = new TimePanel(gui);
 		wordsPanel = new WordsPanel(gui);
 		submitPanel = new SubmitPanel(gui);
 
 		setLayout(new BorderLayout());
 		
-		add(submitPanel, BorderLayout.NORTH);
-		add(wordsLabel, BorderLayout.NORTH);
-		add(selectedWords, BorderLayout.CENTER);
+		add(timePanel, BorderLayout.NORTH);
+		add(wordsPanel, BorderLayout.CENTER);
+		add(submitPanel, BorderLayout.SOUTH);
 	}
 
-	public JLabel getWordsLabel() {
-		return wordsLabel;
+
+	public TimePanel getTimePanel() {
+		return timePanel;
 	}
 
-	public JTextArea getSelectedWords() {
-		return selectedWords;
+
+	public WordsPanel getWordsPanel() {
+		return wordsPanel;
 	}
+
 
 	public SubmitPanel getSubmitPanel() {
 		return submitPanel;
 	}
+
+	
 
 }

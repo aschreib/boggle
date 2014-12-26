@@ -8,17 +8,21 @@ public class SubmitPanel extends JPanel {
 
 	private ClientGUI gui;
 
-	private JTextField wordToSubmit;
+	private JTextField wordToSubmitField;
 	private JButton submitWord;
 
 	public SubmitPanel(ClientGUI gui) {
 		this.gui = gui;
-		wordToSubmit = new JTextField(20);
+		wordToSubmitField = new JTextField(20);
 		submitWord = new JButton("Submit Word");
 		submitWord.setEnabled(false);
 
-		add(wordToSubmit);
+		add(wordToSubmitField);
 		add(submitWord);
+	}
+	
+	public JTextField getWordToSubmit(){
+		return wordToSubmitField;
 	}
 
 
