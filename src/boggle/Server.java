@@ -155,14 +155,17 @@ public class Server extends Thread {
 			out = clients[i].getOutputStream();
 			out.write("Winner is".getBytes());
 			out.write(winner.getBytes());
+			
 			if(i == 0){
 				out.write("Your point score: ".getBytes());
 			}else{
-				
+				out.write("Other player's point score: ".getBytes());
 			}
 			out.write(player1Points);
 			if(i == 1){
 				out.write("Your point score: ".getBytes());
+			}else{
+				out.write("Other player's point score: ".getBytes());
 			}
 			out.write(player2Points);
 			
