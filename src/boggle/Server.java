@@ -134,7 +134,8 @@ public class Server extends Thread {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Server server = new Server();
+		ServerSocket server = new ServerSocket(8080);
+		Socket socket = server.accept();
 
 	}
 

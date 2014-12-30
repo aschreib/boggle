@@ -1,6 +1,9 @@
 package boggle;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -17,6 +20,7 @@ public class Client {
 	// - we can change it
 
 	private String[] board; // from server
+	private int index = 0;
 	private ArrayList<String> words; // chosen by player
 	private Timer timer; // don't have to use this class but probably has
 							// everything built in that we need, look at java
@@ -29,14 +33,22 @@ public class Client {
 		ClientGUI gui = new ClientGUI(this);
 		gui.setVisible(true);
 		this.gui = gui;
-		socket = new Socket("127.0.0.1", 8770);
+		socket = new Socket("127.0.0.1", 8080);
 		words = new ArrayList<String>();
 
 	}
 
-	public void createBoard() {
+	public void createBoard() throws IOException {
 		//get letters from server
 		// after gets board from server, calls this method
+		InputStream input = socket.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			board[index] = line;
+			index++;
+			System.out.println(line);
+		}
 		gui.createBoard(board);
 	}
 
