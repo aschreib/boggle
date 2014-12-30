@@ -7,28 +7,32 @@ import javax.swing.JPanel;
 
 public class BoggleBoardPanel extends JPanel {
 
-	public static int SIZE = 4;
+ public static int SIZE = 4;
 
-	private JButton[][] board;
+ private JButton[][] board;
 
-	public BoggleBoardPanel() {
-		board = new JButton[SIZE][SIZE];
+ public BoggleBoardPanel() {
+  board = new JButton[SIZE][SIZE];
 
-		setLayout(new GridLayout(SIZE, SIZE));
+  setLayout(new GridLayout(SIZE, SIZE));
 
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				add(board[i][j] = new JButton());
-			}
-		}
-	}
+  for (int i = 0; i < SIZE; i++) {
+   for (int j = 0; j < SIZE; j++) {
+    add(board[i][j] = new JButton());
+   }
+  }
+ }
 
-	public static int getSIZE() {
-		return SIZE;
-	}
+ public static int getSIZE() {
+  return SIZE;
+ }
 
-	public JButton[][] getBoard() {
-		return board;
-	}
+ public JButton[][] getBoard() {
+  return board;
+ }
+ 
+ //when a button is clicked:
+ //1)get letter and put it in UserInputPanel.SubmitPanel.wordToSubmitField
+ //2)set any non adjacent buttons unclickable, all adjacent buttons should be clickable
 
 }
