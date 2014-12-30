@@ -18,7 +18,7 @@ public class Server extends Thread {
 	// must be multi-threaded to be able to connect to 2 clients
 
 	private Dictionary dictionary;
-	private Socket[] Clients; // game is played with exactly 2 clients
+	private Socket[] clients; // game is played with exactly 2 clients
 	private BoggleDice dice;
 	private ServerSocket serverSocket;
 
@@ -27,7 +27,7 @@ public class Server extends Thread {
 	public Server() throws IOException {
 		dictionary = new Dictionary();
 		dice = new BoggleDice();
-		serverSocket = new ServerSocket(8770);
+		serverSocket = new ServerSocket(8080);
 
 	}
 
@@ -37,7 +37,7 @@ public class Server extends Thread {
 		while (true) {
 
 			try {
-				Clients[index++] = serverSocket.accept();
+				clients[index++] = serverSocket.accept();
 				if (index % 2 == 0) {
 					sendBoardToClients();
 				}
@@ -61,7 +61,7 @@ public class Server extends Thread {
 
 		String[] boardLetters = getBoard();
 
-		for (Socket c : Clients) {
+		for (Socket c : clients) {
 			OutputStream out;
 			try {
 				out = c.getOutputStream();
@@ -86,7 +86,7 @@ public class Server extends Thread {
 		int player2Points = 0;
 		Map<String, Socket> playersValidWords = new HashMap<String, Socket>();
 
-		for (Socket c : Clients) {
+		for (Socket c : clients) {
 			InputStream in = c.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String word;
@@ -108,7 +108,7 @@ public class Server extends Thread {
 		}
 
 		for (String word : playersValidWords.keySet()) {
-			if ((playersValidWords.get(word)).equals(Clients[0])) {
+			if ((playersValidWords.get(word)).equals(clients[0])) {
 				player1Points++;
 			}
 		}
@@ -144,8 +144,12 @@ public class Server extends Thread {
 	}
 
 	public static void main(String[] args) throws IOException {
-		ServerSocket server = new ServerSocket(8080);
-		Socket socket = server.accept();
+		Server server = new Server();
+		server.clients = new Socket[2];
+		
+		while (true) {
+			Socket socket = server.serverSocket.accept();
+		}
 
 	}
 
