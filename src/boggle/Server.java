@@ -33,14 +33,32 @@ public class Server extends Thread {
 
 	public void run() {
 		int index = 0;
+		Socket client;
 
 		while (true) {
 
 			try {
-				clients[index++] = serverSocket.accept();
-				if (index % 2 == 0) {
-					sendBoardToClients();
+				client = serverSocket.accept();
+
+				InputStream in = client.getInputStream();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(in));
+				String word;
+				while ((word = reader.readLine()) != null) {
+					if (word.equals("start game")) {
+						clients[index++] = client;
+						if (index % 2 == 0) {
+							sendBoardToClients();
+						}
+
+					} else if (word.equals("game results")) {// clients are
+																// sending
+																// results of
+																// game
+						checkForWinner();
+					}
 				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,7 +106,8 @@ public class Server extends Thread {
 
 		for (Socket c : clients) {
 			InputStream in = c.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
 			String word;
 			while ((word = reader.readLine()) != null) {
 				if (dictionary.exists(word)) {
@@ -120,7 +139,7 @@ public class Server extends Thread {
 			winner = "Player2";
 		}
 
-		sendResultsToClients(winner,player1Points,player2Points);
+		sendResultsToClients(winner, player1Points, player2Points);
 
 		/*
 		 * has to go through 2 lists and check for duplicates and invalid words.
@@ -129,15 +148,25 @@ public class Server extends Thread {
 		 */
 	}
 
-	public void sendResultsToClients(String winner, int player1Points, int player2Points) throws IOException {
+	public void sendResultsToClients(String winner, int player1Points,
+			int player2Points) throws IOException {
 		OutputStream out = null;
-		for (Socket c : Clients) {
-			out = c.getOutputStream();
+		for (int i = 0; i < clients.length; i++) {
+			out = clients[i].getOutputStream();
+			out.write("Winner is".getBytes());
 			out.write(winner.getBytes());
+			if(i == 0){
+				out.write("Your point score: ".getBytes());
+			}else{
+				
+			}
 			out.write(player1Points);
+			if(i == 1){
+				out.write("Your point score: ".getBytes());
+			}
 			out.write(player2Points);
 			
-            
+
 		}
 		out.close();
 
@@ -145,11 +174,7 @@ public class Server extends Thread {
 
 	public static void main(String[] args) throws IOException {
 		Server server = new Server();
-		server.clients = new Socket[2];
-		
-		while (true) {
-			Socket socket = server.serverSocket.accept();
-		}
+		server.run();
 
 	}
 
