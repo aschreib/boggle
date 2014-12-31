@@ -119,8 +119,8 @@ public class Server extends Thread {
 		} else {
 			winner = "Player2";
 		}
-		
-		sendResultsToClients(winner);
+
+		sendResultsToClients(winner,player1Points,player2Points);
 
 		/*
 		 * has to go through 2 lists and check for duplicates and invalid words.
@@ -129,7 +129,17 @@ public class Server extends Thread {
 		 */
 	}
 
-	public void sendResultsToClients(String winner) {
+	public void sendResultsToClients(String winner, int player1Points, int player2Points) throws IOException {
+		OutputStream out = null;
+		for (Socket c : Clients) {
+			out = c.getOutputStream();
+			out.write(winner.getBytes());
+			out.write(player1Points);
+			out.write(player2Points);
+			
+            
+		}
+		out.close();
 
 	}
 
