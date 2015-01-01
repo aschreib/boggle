@@ -33,21 +33,22 @@ public class Server extends Thread {
 
 	public void run() {
 		int index = 0;
-		Socket client;
+		Socket clientSocket;
 
 		while (true) {
 
 			try {
-				client = serverSocket.accept();
+				clientSocket = serverSocket.accept();
 
-				InputStream in = client.getInputStream();
+				InputStream in = clientSocket.getInputStream();
 				BufferedReader reader = new BufferedReader(
 						new InputStreamReader(in));
 				String word;
 				while ((word = reader.readLine()) != null) {
 					if (word.equals("start game")) {
-						clients[index++] = client;
+						clients[index++] = clientSocket;
 						if (index % 2 == 0) {
+							// commented if out to test on one
 							sendBoardToClients();
 						}
 
@@ -155,24 +156,39 @@ public class Server extends Thread {
 			out = clients[i].getOutputStream();
 			out.write("Winner is".getBytes());
 			out.write(winner.getBytes());
-			
-			if(i == 0){
+
+			if (i == 0) {
 				out.write("Your point score: ".getBytes());
-			}else{
+			} else {
 				out.write("Other player's point score: ".getBytes());
 			}
 			out.write(player1Points);
-			if(i == 1){
+			if (i == 1) {
 				out.write("Your point score: ".getBytes());
-			}else{
+			} else {
 				out.write("Other player's point score: ".getBytes());
 			}
 			out.write(player2Points);
-			
 
 		}
 		out.close();
 
+	}
+
+	public Dictionary getDictionary() {
+		return dictionary;
+	}
+
+	public Socket[] getClients() {
+		return clients;
+	}
+
+	public BoggleDice getDice() {
+		return dice;
+	}
+
+	public ServerSocket getServerSocket() {
+		return serverSocket;
 	}
 
 	public static void main(String[] args) throws IOException {
