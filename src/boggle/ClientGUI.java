@@ -1,88 +1,75 @@
 package boggle;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 public class ClientGUI extends JFrame {
 
- private JSplitPane splitPane;
- 
- private BoggleBoardPanel boggleBoard;
- private UserInputPanel wordsPanel;
+	private JSplitPane splitPane;
 
- private Client client;
+	private BoggleBoardPanel boggleBoard;
+	private UserInputPanel wordsPanel;
 
- public ClientGUI(Client client) {
-  this.client = client;
-  
-  setTitle("Boggle");
-  setSize(900, 500);
-  setLocationRelativeTo(null);
-  setDefaultCloseOperation(EXIT_ON_CLOSE);
+	private Client client;
 
-  splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boggleBoard = new BoggleBoardPanel(),
-    wordsPanel = new UserInputPanel(this));
-  splitPane.setDividerLocation(getWidth() / 2);
-  splitPane.setEnabled(false);
-  add(splitPane);
+	public ClientGUI(Client client) {
+		this.client = client;
 
- }
+		setTitle("Boggle");
+		setSize(900, 500);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
- public JSplitPane getSplitPane() {
-  return splitPane;
- }
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boggleBoard = new BoggleBoardPanel(),
+				wordsPanel = new UserInputPanel(this));
+		splitPane.setDividerLocation(getWidth() / 2);
+		splitPane.setEnabled(false);
+		add(splitPane);
 
- public void setSplitPane(JSplitPane splitPane) {
-  this.splitPane = splitPane;
- }
+	}
 
- public BoggleBoardPanel getBoggleBoard() {
-  return boggleBoard;
- }
+	public JSplitPane getSplitPane() {
+		return splitPane;
+	}
 
- public void setBoggleBoard(BoggleBoardPanel boggleBoard) {
-  this.boggleBoard = boggleBoard;
- }
+	public void setSplitPane(JSplitPane splitPane) {
+		this.splitPane = splitPane;
+	}
 
- public UserInputPanel getWordsPanel() {
-  return wordsPanel;
- }
+	public BoggleBoardPanel getBoggleBoard() {
+		return boggleBoard;
+	}
 
- public void setWordsPanel(UserInputPanel wordsPanel) {
-  this.wordsPanel = wordsPanel;
- }
+	public UserInputPanel getWordsPanel() {
+		return wordsPanel;
+	}
 
+	public void setWordsPanel(UserInputPanel wordsPanel) {
+		this.wordsPanel = wordsPanel;
+	}
 
- public Client getClient() {
-  return client;
- }
+	public Client getClient() {
+		return client;
+	}
 
- public void setClient(Client client) {
-  this.client = client;
- }
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
- public void createBoard(String[] board) {
+	public void createBoard(String[] board) {
 
-  int position = 0;
+		boggleBoard.setBoard(board);
 
-  JButton[][] boggleButtons = boggleBoard.getBoard();
-  int size = BoggleBoardPanel.getSIZE();
-  for (int i = 0; i < size; i++) {
-   for (int j = 0; j < size; j++) {
-    boggleButtons[i][j].setText(board[position++]);
-   }
-  }
- }
+	}
 
- // when a letter button is clicked add the letter to tempWord
- // only when enter/button is pressed then call Client.addWord and then clear
- // the tempWord.
+	// when a letter button is clicked add the letter to tempWord
+	// only when enter/button is pressed then call Client.addWord and then
+	// clear
+	// the tempWord.
 
- // display words to the player that they already chose??
+	// display words to the player that they already chose??
 
- // include code that once a button is clicked the player can only click
- // adjacent buttons
-
+	// include code that once a button is clicked the player can only click
+	// adjacent buttons
 
 }

@@ -1,17 +1,12 @@
 package boggle;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Timer;
-
-import javax.swing.JButton;
 
 public class Client {
 
@@ -21,7 +16,7 @@ public class Client {
 	// this structure is just a suggestion - split between Client and ClientGUI
 	// - we can change it
 
-	private String[] letters = new String[16]; // from server
+	// from server
 	private ArrayList<String> words; // chosen by player
 	private Timer timer; // don't have to use this class but probably has
 	// everything built in that we need, look at java
@@ -38,10 +33,6 @@ public class Client {
 		socket = new Socket("127.0.0.1", 8080);
 		words = new ArrayList<String>();
 
-	}
-
-	public String[] getLetters() {
-		return letters;
 	}
 
 	public ArrayList<String> getWords() {
@@ -65,32 +56,14 @@ public class Client {
 	}
 
 	public void startGame(String start) throws IOException {
-		if (out == null) {
+		if (out == null) {// outputstream is only set once in a game
 			out = socket.getOutputStream();
 		}
 		out.write(start.getBytes());
 		out.flush();
-		InputStream in = socket.getInputStream();
-		String line;
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		int letterPos = 0;
-		// for(int x=0;x<16;x++){
-		// if(reader.readLine()!=null){
-		// letters[letterPos] = reader.readLine();
-		// }
-		// }
-		while ((line = reader.readLine()) != null) {
-			letters[letterPos] = line;
-		}
+		ListeningThread thread = new ListeningThread(socket, this);
+		thread.start();
 
-		JButton[][] board = gui.getBoggleBoard().getBoard();
-		int letterNum = 0;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				board[i][j].setText(letters[letterNum]);
-				letterNum++;
-			}
-		}
 	}
 
 	/*
@@ -121,8 +94,7 @@ public class Client {
 		}
 	}
 
-	public static void main(String[] args) throws UnknownHostException,
-			IOException {
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		new Client();
 	}
 

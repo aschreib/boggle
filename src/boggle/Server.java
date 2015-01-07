@@ -41,8 +41,7 @@ public class Server extends Thread {
 				clientSocket = serverSocket.accept();
 
 				InputStream in = clientSocket.getInputStream();
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(in));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 				String word;
 				while ((word = reader.readLine()) != null) {
 					if (word.equals("start game")) {
@@ -86,7 +85,7 @@ public class Server extends Thread {
 				out = c.getOutputStream();
 				PrintWriter writer = new PrintWriter(out);
 				for (String letter : boardLetters) {
-					writer.print(letter);
+					writer.println(letter);
 					writer.flush();
 				}
 			} catch (IOException e) {
@@ -107,8 +106,7 @@ public class Server extends Thread {
 
 		for (Socket c : clients) {
 			InputStream in = c.getInputStream();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String word;
 			while ((word = reader.readLine()) != null) {
 				if (dictionary.exists(word)) {
@@ -149,8 +147,7 @@ public class Server extends Thread {
 		 */
 	}
 
-	public void sendResultsToClients(String winner, int player1Points,
-			int player2Points) throws IOException {
+	public void sendResultsToClients(String winner, int player1Points, int player2Points) throws IOException {
 		OutputStream out = null;
 		for (int i = 0; i < clients.length; i++) {
 			out = clients[i].getOutputStream();
