@@ -19,10 +19,10 @@ public class ListeningThread extends Thread {
 	@Override
 	public void run() {
 		String[] letters = new String[16];
-		InputStream input;
+
 
 		try {
-			input = socket.getInputStream();
+			InputStream input = socket.getInputStream();
 			String line;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			int letterPos = 0;

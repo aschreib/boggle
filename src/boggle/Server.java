@@ -39,19 +39,21 @@ public class Server extends Thread {
 
 			try {
 				clientSocket = serverSocket.accept();
+				System.out.println("connected to " + clientSocket.getPort());
 
 				InputStream in = clientSocket.getInputStream();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-				String word;
-				while ((word = reader.readLine()) != null) {
-					if (word.equals("start game")) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					System.out.println(line);
+					if (line.equals("start game")) {
 						clients[index++] = clientSocket;
-						if (index % 2 == 0) {
-							// commented if out to test on one
+						//if (index % 2 == 0) {
+							// comment it out to test on one
 							sendBoardToClients();
-						}
+						//}
 
-					} else if (word.equals("game results")) {// clients are
+					} else if (line.equals("game results")) {// clients are
 																// sending
 																// results of
 																// game
