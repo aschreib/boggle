@@ -18,7 +18,8 @@ public class SocketHandler extends Thread {
 	private Socket[] sockets;
 	private BoggleDice dice;
 
-	public SocketHandler(Socket clientSocket, Socket[] sockets) throws FileNotFoundException {
+	public SocketHandler(Socket clientSocket, Socket[] sockets)
+			throws FileNotFoundException {
 		dice = new BoggleDice();
 		this.sockets = sockets;
 		this.clientSocket = clientSocket;
@@ -32,12 +33,13 @@ public class SocketHandler extends Thread {
 		InputStream in;
 		try {
 			in = clientSocket.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
 				if (line.equals("start game")) {
-         
+
 					// if (sockets.length % 2 == 0) {
 					// comment it out to test on one
 					sendBoardToClients();
@@ -97,8 +99,10 @@ public class SocketHandler extends Thread {
 
 		for (Socket c : sockets) {
 			InputStream in = c.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
 			String word;
+			int points;
 			while ((word = reader.readLine()) != null) {
 				if (dictionary.exists(word)) {
 					if (playerNum == 2) {
@@ -106,14 +110,16 @@ public class SocketHandler extends Thread {
 							playersValidWords.remove(word);
 						} else {
 							playersValidWords.put(word, c);
-							player2Points++;
+							points = getWordPoints(word);
+							player2Points+=points;
 						}
 					} else {
 						playersValidWords.put(word, c);
 					}
 				}
 			}
-			playerNum++;
+			points = getWordPoints(word);
+			playerNum += points;
 		}
 
 		for (String word : playersValidWords.keySet()) {
@@ -138,7 +144,8 @@ public class SocketHandler extends Thread {
 		 */
 	}
 
-	public void sendResultsToClients(String winner, int player1Points, int player2Points) throws IOException {
+	public void sendResultsToClients(String winner, int player1Points,
+			int player2Points) throws IOException {
 		OutputStream out = null;
 		for (int i = 0; i < sockets.length; i++) {
 			out = sockets[i].getOutputStream();
@@ -161,6 +168,36 @@ public class SocketHandler extends Thread {
 		}
 		out.close();
 
+	}
+
+	public int getWordPoints(String word) {
+		int pointValue = 0;
+		int wordLength = word.length();
+		switch (wordLength) {
+		case 3:
+			pointValue = 1;
+			break;
+		case 4:
+			pointValue = 2;
+			break;
+		case 5:
+			pointValue = 3;
+			break;
+		case 6:
+			pointValue = 4;
+			break;
+		case 7:
+			pointValue = 5;
+			break;
+		case 8:
+			pointValue = 11;
+			break;
+		default:
+			pointValue = wordLength * 2;
+			break;
+
+		}
+		return pointValue;
 	}
 
 	public Dictionary getDictionary() {

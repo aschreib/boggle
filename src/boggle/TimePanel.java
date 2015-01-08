@@ -68,7 +68,7 @@ public class TimePanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				gui.getClient().startGame("start game/n");
+				gui.getClient().startGame("start game\n");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
