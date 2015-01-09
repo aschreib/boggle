@@ -1,14 +1,15 @@
 package boggle;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class UserInputPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private ClientGUI gui;
 	
 	private TimePanel timePanel;
@@ -17,7 +18,7 @@ public class UserInputPanel extends JPanel {
 	
 
 	public UserInputPanel(ClientGUI gui) {
-		this.gui = gui;
+		this.setGui(gui);
 		
 		timePanel = new TimePanel(gui);
 		wordsPanel = new WordsPanel(gui);
@@ -43,6 +44,16 @@ public class UserInputPanel extends JPanel {
 
 	public SubmitPanel getSubmitPanel() {
 		return submitPanel;
+	}
+
+
+	public ClientGUI getGui() {
+		return gui;
+	}
+
+
+	public void setGui(ClientGUI gui) {
+		this.gui = gui;
 	}
 
 	

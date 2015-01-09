@@ -5,6 +5,11 @@ import javax.swing.JSplitPane;
 
 public class ClientGUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JSplitPane splitPane;
 
 	private BoggleBoardPanel boggleBoard;
@@ -20,8 +25,9 @@ public class ClientGUI extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boggleBoard = new BoggleBoardPanel(),
-				wordsPanel = new UserInputPanel(this));
+		wordsPanel = new UserInputPanel(this);
+		boggleBoard = new BoggleBoardPanel(this);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, boggleBoard, wordsPanel);
 		splitPane.setDividerLocation(getWidth() / 2);
 		splitPane.setEnabled(false);
 		add(splitPane);

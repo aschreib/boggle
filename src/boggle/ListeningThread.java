@@ -26,8 +26,10 @@ public class ListeningThread extends Thread {
 			String line;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			int letterPos = 0;
-			while ((line = reader.readLine()) != null) {
-				letters[letterPos++] = line;
+			for(int letterNum = 0; letterNum < 16; letterNum++){
+				if((line = reader.readLine())!=null){
+					letters[letterPos++] = line;
+				}
 			}
 
 			client.getGui().createBoard(letters);

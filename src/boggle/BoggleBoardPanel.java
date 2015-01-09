@@ -7,11 +7,18 @@ import javax.swing.JPanel;
 
 public class BoggleBoardPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static int SIZE = 4;
 
+	private ClientGUI gui;
 	private JButton[][] board;
 
-	public BoggleBoardPanel() {
+	public BoggleBoardPanel(ClientGUI gui) {
+		this.gui = gui;
 		board = new JButton[SIZE][SIZE];
 
 		setLayout(new GridLayout(SIZE, SIZE));
@@ -19,6 +26,8 @@ public class BoggleBoardPanel extends JPanel {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				add(board[i][j] = new JButton());
+				board[i][j].addActionListener(new BoggleButtonListener(
+						board[i][j], i, j, this));
 			}
 		}
 	}
@@ -41,6 +50,14 @@ public class BoggleBoardPanel extends JPanel {
 			}
 		}
 
+	}
+
+	public ClientGUI getGui() {
+		return gui;
+	}
+
+	public void setGui(ClientGUI gui) {
+		this.gui = gui;
 	}
 
 	// when a button is clicked:
