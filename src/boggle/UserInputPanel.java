@@ -22,7 +22,9 @@ public class UserInputPanel extends JPanel {
 		
 		timePanel = new TimePanel(gui);
 		wordsPanel = new WordsPanel(gui);
+		System.out.println("words panel");
 		submitPanel = new SubmitPanel(gui);
+		System.out.println("submit panel");
 
 		setLayout(new BorderLayout());
 		

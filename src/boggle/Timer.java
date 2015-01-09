@@ -52,7 +52,7 @@ public class Timer extends Thread {
 			//int secondDifference = currentSecond - startSecond;
 
 			// change text on gui
-			TimePanel timePanel = client.getGui().getWordsPanel().getTimePanel();
+			TimePanel timePanel = client.getGui().getInputPanel().getTimePanel();
 			timePanel.setMinute((int) (timePanel.getMinute() - TimeUnit.MILLISECONDS.toMinutes(difference)));
 			timePanel.setSecond((int) (timePanel.getSecond() - TimeUnit.MILLISECONDS.toSeconds(difference)));
 			timePanel.setTimerLabelText();

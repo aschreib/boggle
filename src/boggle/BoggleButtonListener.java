@@ -31,12 +31,13 @@ public class BoggleButtonListener implements ActionListener {
 		// TODO Auto-generated method stub
 		//append letter to buildingWord
 		gui = boardPanel.getGui();
-		submitPanel = gui.getWordsPanel().getSubmitPanel();
+		submitPanel = gui.getInputPanel().getSubmitPanel();
 		submitPanel.getSubmitWord().setEnabled(true);
 		buildingWord = submitPanel.getWordToSubmit();
 		stringBuilder = new StringBuilder(buildingWord.getText());
 		stringBuilder.append(button.getText());
 		submitPanel.setWordToSubmit(stringBuilder.toString());
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				JButton currentButton = boardPanel.getBoard()[i][j];
@@ -48,6 +49,7 @@ public class BoggleButtonListener implements ActionListener {
 				}
 			}
 		}
+		button.setEnabled(false);
 	}
 	
 	public boolean adjacentRow(int thisRow){

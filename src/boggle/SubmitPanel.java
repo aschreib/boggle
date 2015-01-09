@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SubmitPanel extends JPanel {
@@ -16,18 +17,27 @@ public class SubmitPanel extends JPanel {
 
 	private ClientGUI gui;
 
-	private JTextField wordToSubmitField;
 	private JButton submitWord;
+	private JTextField wordToSubmitField;
+	private JTextArea textArea;
 
 	public SubmitPanel(final ClientGUI gui) {
 		this.setGui(gui);
 		wordToSubmitField = new JTextField(20);
+	
+		UserInputPanel inputPanel = gui.getInputPanel();
+//		WordsPanel wordsPanel = inputPanel.getWordsPanel();
+		//textArea = wordsPanel.getSelectedWords();
 		submitWord = new JButton("Submit Word");
 		//create action listener to submit word and set all buttons clickable
 		submitWord.addActionListener(new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {		
+				//display word in JTextArea
+				textArea = gui.getInputPanel().getWordsPanel().getSelectedWords();
+				textArea.append(wordToSubmitField.getText() + "\n");
+				
 				//need to submit word
 				
 				//then set all buttons clickable
