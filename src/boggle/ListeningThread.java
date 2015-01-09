@@ -33,8 +33,13 @@ public class ListeningThread extends Thread {
 			}
 
 			client.getGui().createBoard(letters);
+			Timer timer = new Timer(client);
+			timer.startTimer();
 
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

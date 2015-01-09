@@ -25,10 +25,10 @@ public class TimePanel extends JPanel {
 
 	public TimePanel(ClientGUI gui) {
 		this.gui = gui;
-		minute = 3;
+		minute = 2;
 		second = 59;
 
-		timerLabel = new JLabel("Time Remaining: ");
+		timerLabel = new JLabel();
 		setTimerLabelText();
 		startGame = new JButton("Start Game");
 
@@ -43,9 +43,7 @@ public class TimePanel extends JPanel {
 	}
 
 	public void setTimerLabelText() {
-		StringBuilder timeText = new StringBuilder(timerLabel.getText());
-		timeText.append(getMinute() + ":" + getSecond());
-		timerLabel.setText(timeText.toString());
+		timerLabel.setText("Time Remaining: " + getMinute() + ":" + getSecond());
 	}
 
 	public JButton getStartGame() {
