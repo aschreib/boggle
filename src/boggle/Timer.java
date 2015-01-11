@@ -1,77 +1,68 @@
 package boggle;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 public class Timer extends Thread {
 
 	private Client client;
-	private Date startTime;
-	//private int startMinute;
-	//private int startSecond;
-	private int timeElapsed;// 3 minutes
-
-	private CountDownLatch latch;
+	private GregorianCalendar startTime;
+	private GregorianCalendar endTime;
 
 	public Timer(Client client) {
 		this.client = client;
-		//startMinute = 0;
-		//startSecond = 0;
-		timeElapsed = 0;
-
-		latch = new CountDownLatch(3);
 	}
 
 	public void startTimer() throws InterruptedException {
-		//GregorianCalendar startTime = (GregorianCalendar) GregorianCalendar.getInstance();
-		startTime = GregorianCalendar.getInstance().getTime();
-		//startMinute = startTime.get(Calendar.MINUTE);
-		//startSecond = startTime.get(Calendar.SECOND);
+
+		startTime = new GregorianCalendar();
+		endTime = new GregorianCalendar();
+		endTime.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE) + 3);
+
+		System.out.println("Start time: " + startTime.get(Calendar.MINUTE) + ":" + startTime.get(Calendar.SECOND));
+		System.out.println("End time: " + endTime.get(Calendar.MINUTE) + ":" + endTime.get(Calendar.SECOND));
+
 		this.start();
-		latch.await();
-		// end game
+
 	}
 
 	@Override
 	public void run() {
 
-		do {
+		int endMin = endTime.get(Calendar.MINUTE);
+		int endSec = endTime.get(Calendar.SECOND);
 
-			// check current time
-			//GregorianCalendar currentTime = (GregorianCalendar) GregorianCalendar.getInstance();
-			//int currentMinute = currentTime.get(Calendar.MINUTE);
-			//int currentSecond = currentTime.get(Calendar.SECOND);
-			
-			Date currentTime = GregorianCalendar.getInstance().getTime();
-			long difference = currentTime.getTime() - startTime.getTime();
+		System.out.println(endMin + ":" + endSec);
 
-			// calculate difference
-			//int minuteDifference = currentMinute - startMinute;
-			//int secondDifference = currentSecond - startSecond;
+		while (GregorianCalendar.getInstance().get(Calendar.MINUTE) != endMin
+				|| GregorianCalendar.getInstance().get(Calendar.SECOND) != endSec) {
 
 			// change text on gui
 			TimePanel timePanel = client.getGui().getInputPanel().getTimePanel();
-			timePanel.setMinute((int) (timePanel.getMinute() - TimeUnit.MILLISECONDS.toMinutes(difference)));
-			timePanel.setSecond((int) (timePanel.getSecond() - TimeUnit.MILLISECONDS.toSeconds(difference)));
+			int displayedSecond = timePanel.getSecond();
+			int displayedMinute = timePanel.getMinute();
+
+			if (displayedSecond == 0) {
+				timePanel.setSecond(59);
+				timePanel.setMinute(displayedMinute - 1);
+
+			} else {
+				timePanel.setSecond(displayedSecond - 1);
+			}
+
 			timePanel.setTimerLabelText();
 
-			// update timeElapsed
-			//timeElapsed = minuteDifference;
-
-			// decrement countdownlatch on certain condition
-
-			// only check thread every second
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-		} while (timeElapsed <= 3);
 
-		client.sendWords();//send words to server because timer is up
+		}
+		// game over
+		client.getGui().disableButtons();
+		client.sendWords();// send words to server because timer is up
+
 	}
 
 }

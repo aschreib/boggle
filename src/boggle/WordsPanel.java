@@ -7,9 +7,6 @@ import javax.swing.JTextArea;
 
 public class WordsPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private ClientGUI gui;
@@ -26,6 +23,7 @@ public class WordsPanel extends JPanel {
 		selectedWords.setFont(new Font(Font.SERIF, Font.BOLD, 12));
 
 		add(selectedWords);
+		selectedWords.setEditable(false);
 		selectedWords.append(wordsLabel);
 	}
 

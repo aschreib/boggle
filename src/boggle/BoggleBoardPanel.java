@@ -28,8 +28,7 @@ public class BoggleBoardPanel extends JPanel {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				add(board[i][j] = new JButton());
-				board[i][j].addActionListener(new BoggleButtonListener(
-						board[i][j], i, j, this));
+				board[i][j].addActionListener(new BoggleButtonListener(board[i][j], i, j, this));
 			}
 		}
 	}
@@ -45,9 +44,9 @@ public class BoggleBoardPanel extends JPanel {
 	public void setBoard(String[] letters) {
 		int position = 0;
 
-		int size = BoggleBoardPanel.getSIZE();
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		// int size = BoggleBoardPanel.getSIZE();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				board[i][j].setText(letters[position++]);
 			}
 		}
@@ -69,13 +68,19 @@ public class BoggleBoardPanel extends JPanel {
 	public void setAlreadyClicked(boolean[][] alreadyClicked) {
 		this.alreadyClicked = alreadyClicked;
 	}
-	
 
-	
-	public void resetClickedList(){
-		for(int i=0; i<4;i++){
-			for(int j=0; j<4; j++){
+	public void resetClickedList() {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				alreadyClicked[i][j] = false;
+			}
+		}
+	}
+
+	public void disableAll() {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				board[i][j].setEnabled(false);
 			}
 		}
 	}

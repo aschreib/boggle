@@ -10,9 +10,6 @@ import javax.swing.JPanel;
 
 public class TimePanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private ClientGUI gui;
@@ -23,10 +20,13 @@ public class TimePanel extends JPanel {
 	private int minute;
 	private int second;
 
+	public final int START_MINUTE = 2;
+	public final int START_SECOND = 59;
+
 	public TimePanel(ClientGUI gui) {
 		this.gui = gui;
-		minute = 2;
-		second = 59;
+		minute = START_MINUTE;
+		second = START_SECOND;
 
 		timerLabel = new JLabel();
 		setTimerLabelText();
@@ -43,7 +43,7 @@ public class TimePanel extends JPanel {
 	}
 
 	public void setTimerLabelText() {
-		timerLabel.setText("Time Remaining: " + getMinute() + ":" + getSecond());
+		timerLabel.setText("Time Remaining: " + getMinute() + ":" + String.format("%02d", getSecond()));
 	}
 
 	public JButton getStartGame() {

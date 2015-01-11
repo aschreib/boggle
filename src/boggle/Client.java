@@ -17,10 +17,7 @@ public class Client {
 
 	// from server
 	private ArrayList<String> words; // chosen by player
-	private Timer timer; // don't have to use this class but probably has
-	// everything built in that we need, look at java
-	// docs
-	// maybe this belongs in ClientGUI
+	private Timer timer;
 	public ClientGUI gui;
 	private Socket socket;
 	private OutputStream out;

@@ -5,9 +5,6 @@ import javax.swing.JSplitPane;
 
 public class ClientGUI extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JSplitPane splitPane;
@@ -66,6 +63,11 @@ public class ClientGUI extends JFrame {
 
 		boggleBoard.setBoard(board);
 
+	}
+
+	public void disableButtons() {
+		inputPanel.getSubmitPanel().getSubmitWord().setEnabled(false);
+		boggleBoard.disableAll();
 	}
 
 	// when a letter button is clicked add the letter to tempWord
