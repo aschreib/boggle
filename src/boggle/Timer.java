@@ -71,6 +71,7 @@ public class Timer extends Thread {
 
 		} while (timeElapsed <= 3);
 
+		client.sendWords();//send words to server because timer is up
 	}
 
 }

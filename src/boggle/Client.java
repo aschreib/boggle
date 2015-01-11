@@ -77,7 +77,8 @@ public class Client {
 		words.add(word);
 	}
 
-	public void sendWords(ArrayList<String> wordList) {
+	public void sendWords() {
+		ArrayList<String> wordList = gui.getInputPanel().getSubmitPanel().getWordList();
 		// when time is up sends list to server
 		try {
 			if (out == null) {
