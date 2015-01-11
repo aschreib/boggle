@@ -69,6 +69,16 @@ public class BoggleBoardPanel extends JPanel {
 	public void setAlreadyClicked(boolean[][] alreadyClicked) {
 		this.alreadyClicked = alreadyClicked;
 	}
+	
+
+	
+	public void resetClickedList(){
+		for(int i=0; i<4;i++){
+			for(int j=0; j<4; j++){
+				alreadyClicked[i][j] = false;
+			}
+		}
+	}
 
 	// when a button is clicked:
 	// 1)get letter and put it in UserInputPanel.SubmitPanel.wordToSubmitField

@@ -82,24 +82,8 @@ public class BoggleButtonListener implements ActionListener {
 		else return false;
 	}
 	
-	public void resetClickedList(boolean[][] alreadyClicked){
-		for(int i=0; i<4;i++){
-			for(int j=0; j<4; j++){
-				alreadyClicked[i][j] = false;
-			}
-		}
-	}
-	
 	public StringBuilder getBuildingWord() {
 		return stringBuilder;
-	}
-
-	public boolean[][] getAlreadyClicked() {
-		return alreadyClicked;
-	}
-
-	public void setAlreadyClicked(boolean[][] alreadyClicked) {
-		this.alreadyClicked = alreadyClicked;
 	}
 
 }

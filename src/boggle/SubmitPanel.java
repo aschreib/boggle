@@ -39,7 +39,7 @@ public class SubmitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {		
 				//display word in JTextArea
 				textArea = gui.getInputPanel().getWordsPanel().getSelectedWords();
-				textArea.append(wordToSubmitField.getText() + "\n");
+				textArea.append("\n" + wordToSubmitField.getText());
 				
 				//need to submit word
 				wordList.add(wordToSubmitField.getText());
@@ -51,6 +51,8 @@ public class SubmitPanel extends JPanel {
 						gui.getBoggleBoard().getBoard()[i][j].setEnabled(true);
 					}
 				}		
+				gui.getBoggleBoard().resetClickedList();
+				
 				// clear textfield
 				wordToSubmitField.setText(null);
 				
