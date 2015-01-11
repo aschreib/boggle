@@ -68,7 +68,7 @@ public class Timer extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
+			
 		} while (timeElapsed <= 3);
 
 		client.sendWords();//send words to server because timer is up
