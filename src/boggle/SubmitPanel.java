@@ -2,6 +2,7 @@ package boggle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,13 +21,15 @@ public class SubmitPanel extends JPanel {
 	private JButton submitWord;
 	private JTextField wordToSubmitField;
 	private JTextArea textArea;
+	
+	private ArrayList<String> wordList;
 
 	public SubmitPanel(final ClientGUI gui) {
 		this.setGui(gui);
+		wordList = new ArrayList<String>();
 		wordToSubmitField = new JTextField(20);
 	
-		UserInputPanel inputPanel = gui.getInputPanel();
-//		WordsPanel wordsPanel = inputPanel.getWordsPanel();
+		
 		//textArea = wordsPanel.getSelectedWords();
 		submitWord = new JButton("Submit Word");
 		//create action listener to submit word and set all buttons clickable
@@ -39,6 +42,8 @@ public class SubmitPanel extends JPanel {
 				textArea.append(wordToSubmitField.getText() + "\n");
 				
 				//need to submit word
+				wordList.add(wordToSubmitField.getText());
+				System.out.println("Word added: " + wordToSubmitField.getText());
 				
 				//then set all buttons clickable
 				for(int i=0; i<4; i++){
@@ -80,6 +85,16 @@ public class SubmitPanel extends JPanel {
 	public void setGui(ClientGUI gui) {
 		this.gui = gui;
 	}
+	
+
+	public ArrayList<String> getWordList() {
+		return wordList;
+	}
+
+	public void setWordList(ArrayList<String> wordList) {
+		this.wordList = wordList;
+	}
+
 
 
 }

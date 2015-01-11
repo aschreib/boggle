@@ -16,10 +16,12 @@ public class BoggleBoardPanel extends JPanel {
 
 	private ClientGUI gui;
 	private JButton[][] board;
+	private boolean[][] alreadyClicked;
 
 	public BoggleBoardPanel(ClientGUI gui) {
 		this.gui = gui;
 		board = new JButton[SIZE][SIZE];
+		alreadyClicked = new boolean[SIZE][SIZE];
 
 		setLayout(new GridLayout(SIZE, SIZE));
 
@@ -58,6 +60,14 @@ public class BoggleBoardPanel extends JPanel {
 
 	public void setGui(ClientGUI gui) {
 		this.gui = gui;
+	}
+
+	public boolean[][] getAlreadyClicked() {
+		return alreadyClicked;
+	}
+
+	public void setAlreadyClicked(boolean[][] alreadyClicked) {
+		this.alreadyClicked = alreadyClicked;
 	}
 
 	// when a button is clicked:

@@ -17,6 +17,7 @@ public class BoggleButtonListener implements ActionListener {
 	public SubmitPanel submitPanel;
 	public JTextField buildingWord;
 	public StringBuilder stringBuilder;
+	private boolean[][] alreadyClicked;
 
 	public BoggleButtonListener(JButton button, int row, int column, BoggleBoardPanel panel) {
 		this.button = button;
@@ -24,11 +25,14 @@ public class BoggleButtonListener implements ActionListener {
 		this.columnNum = column;
 		this.letter = button.getText();
 		this.boardPanel = panel;
+		this.alreadyClicked = panel.getAlreadyClicked();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		alreadyClicked[rowNum][columnNum] = true;
+		
 		//append letter to buildingWord
 		gui = boardPanel.getGui();
 		submitPanel = gui.getInputPanel().getSubmitPanel();
@@ -41,7 +45,7 @@ public class BoggleButtonListener implements ActionListener {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				JButton currentButton = boardPanel.getBoard()[i][j];
-				if (adjacentRow(i) && adjacentColumn(j)){
+				if (adjacentRow(i) && adjacentColumn(j) && !alreadyClicked[i][j]){
 					currentButton.setEnabled(true);
 				}
 				else{
@@ -49,7 +53,7 @@ public class BoggleButtonListener implements ActionListener {
 				}
 			}
 		}
-		button.setEnabled(false);
+		
 	}
 	
 	public boolean adjacentRow(int thisRow){
@@ -78,8 +82,24 @@ public class BoggleButtonListener implements ActionListener {
 		else return false;
 	}
 	
+	public void resetClickedList(boolean[][] alreadyClicked){
+		for(int i=0; i<4;i++){
+			for(int j=0; j<4; j++){
+				alreadyClicked[i][j] = false;
+			}
+		}
+	}
+	
 	public StringBuilder getBuildingWord() {
 		return stringBuilder;
+	}
+
+	public boolean[][] getAlreadyClicked() {
+		return alreadyClicked;
+	}
+
+	public void setAlreadyClicked(boolean[][] alreadyClicked) {
+		this.alreadyClicked = alreadyClicked;
 	}
 
 }

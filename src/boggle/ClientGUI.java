@@ -50,7 +50,7 @@ public class ClientGUI extends JFrame {
 		return inputPanel;
 	}
 
-	public void setInputPanel(UserInputPanel wordsPanel) {
+	public void setInputPanel(UserInputPanel inputPanel) {
 		this.inputPanel = inputPanel;
 	}
 
