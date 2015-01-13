@@ -20,8 +20,8 @@ public class TimePanel extends JPanel {
 	private int minute;
 	private int second;
 
-	public final int START_MINUTE = 2;
-	public final int START_SECOND = 59;
+	public final int START_MINUTE = 3;
+	public final int START_SECOND = 00;
 
 	public TimePanel(ClientGUI gui) {
 		this.gui = gui;
