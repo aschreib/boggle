@@ -32,11 +32,12 @@ public class BoggleButtonListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		alreadyClicked[rowNum][columnNum] = true;
-		
-		//append letter to buildingWord
+
+		// append letter to buildingWord
 		gui = boardPanel.getGui();
 		submitPanel = gui.getInputPanel().getSubmitPanel();
 		submitPanel.getSubmitWord().setEnabled(true);
+		submitPanel.getClear().setEnabled(true);
 		buildingWord = submitPanel.getWordToSubmit();
 		stringBuilder = new StringBuilder(buildingWord.getText());
 		stringBuilder.append(button.getText());
@@ -45,43 +46,38 @@ public class BoggleButtonListener implements ActionListener {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				JButton currentButton = boardPanel.getBoard()[i][j];
-				if (adjacentRow(i) && adjacentColumn(j) && !alreadyClicked[i][j]){
+				if (adjacentRow(i) && adjacentColumn(j) && !alreadyClicked[i][j]) {
 					currentButton.setEnabled(true);
-				}
-				else{
+				} else {
 					currentButton.setEnabled(false);
 				}
 			}
 		}
-		
+
 	}
-	
-	public boolean adjacentRow(int thisRow){
-		if(thisRow == rowNum){
+
+	public boolean adjacentRow(int thisRow) {
+		if (thisRow == rowNum) {
 			return true;
-		}
-		else if(thisRow == rowNum-1){
+		} else if (thisRow == rowNum - 1) {
 			return true;
-		}
-		else if(thisRow == rowNum+1){
+		} else if (thisRow == rowNum + 1) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
-	
-	public boolean adjacentColumn(int thisColumn){
-		if(thisColumn == columnNum){
+
+	public boolean adjacentColumn(int thisColumn) {
+		if (thisColumn == columnNum) {
 			return true;
-		}
-		else if(thisColumn == columnNum-1){
+		} else if (thisColumn == columnNum - 1) {
 			return true;
-		}
-		else if(thisColumn == columnNum+1){
+		} else if (thisColumn == columnNum + 1) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
-	
+
 	public StringBuilder getBuildingWord() {
 		return stringBuilder;
 	}

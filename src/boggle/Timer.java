@@ -18,10 +18,6 @@ public class Timer extends Thread {
 		startTime = new GregorianCalendar();
 		endTime = new GregorianCalendar();
 		endTime.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE) + 3);
-
-		System.out.println("Start time: " + startTime.get(Calendar.MINUTE) + ":" + startTime.get(Calendar.SECOND));
-		System.out.println("End time: " + endTime.get(Calendar.MINUTE) + ":" + endTime.get(Calendar.SECOND));
-
 		this.start();
 
 	}
@@ -32,10 +28,9 @@ public class Timer extends Thread {
 		int endMin = endTime.get(Calendar.MINUTE);
 		int endSec = endTime.get(Calendar.SECOND);
 
-		System.out.println(endMin + ":" + endSec);
-
-		while (GregorianCalendar.getInstance().get(Calendar.MINUTE) != endMin
-				|| GregorianCalendar.getInstance().get(Calendar.SECOND) != endSec) {
+		GregorianCalendar currentTime;
+		while ((currentTime = (GregorianCalendar) GregorianCalendar.getInstance()).get(Calendar.MINUTE) != endMin
+				|| currentTime.get(Calendar.SECOND) != endSec) {
 
 			// change text on gui
 			TimePanel timePanel = client.getGui().getInputPanel().getTimePanel();

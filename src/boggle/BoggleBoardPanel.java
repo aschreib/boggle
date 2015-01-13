@@ -7,9 +7,6 @@ import javax.swing.JPanel;
 
 public class BoggleBoardPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static int SIZE = 4;
@@ -44,7 +41,6 @@ public class BoggleBoardPanel extends JPanel {
 	public void setBoard(String[] letters) {
 		int position = 0;
 
-		// int size = BoggleBoardPanel.getSIZE();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				board[i][j].setText(letters[position++]);
@@ -77,10 +73,15 @@ public class BoggleBoardPanel extends JPanel {
 		}
 	}
 
-	public void disableAll() {
+	/*
+	 * public void disableAll() { for (int i = 0; i < SIZE; i++) { for (int j =
+	 * 0; j < SIZE; j++) { board[i][j].setEnabled(false); } } }
+	 */
+
+	public void toggleButtons(boolean enabled) {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				board[i][j].setEnabled(false);
+				board[i][j].setEnabled(enabled);
 			}
 		}
 	}

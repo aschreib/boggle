@@ -66,18 +66,10 @@ public class ClientGUI extends JFrame {
 	}
 
 	public void disableButtons() {
-		inputPanel.getSubmitPanel().getSubmitWord().setEnabled(false);
-		boggleBoard.disableAll();
+		SubmitPanel sp = inputPanel.getSubmitPanel();
+		sp.getSubmitWord().setEnabled(false);
+		sp.getClear().setEnabled(false);
+		boggleBoard.toggleButtons(false);
 	}
-
-	// when a letter button is clicked add the letter to tempWord
-	// only when enter/button is pressed then call Client.addWord and then
-	// clear
-	// the tempWord.
-
-	// display words to the player that they already chose??
-
-	// include code that once a button is clicked the player can only click
-	// adjacent buttons
 
 }
