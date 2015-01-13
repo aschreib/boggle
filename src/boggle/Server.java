@@ -3,6 +3,8 @@ package boggle;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server extends Thread {
 
@@ -11,7 +13,7 @@ public class Server extends Thread {
 	// must be multi-threaded to be able to connect to 2 clients
 
 
-	private Socket[] sockets; // game is played with exactly 2 clients
+	private List<Socket> sockets; // game is played with exactly 2 clients
 
 	private ServerSocket serverSocket;
 
@@ -19,24 +21,26 @@ public class Server extends Thread {
 	// use a main, added one below
 	public Server() throws IOException {
 		serverSocket = new ServerSocket(8080);
-        sockets = new Socket[100];
+        sockets = new ArrayList<Socket>();
 
 	}
 
 	public void run() {
-		int index = 0;
 		Socket clientSocket;
 
 		while (true) {
 
 			try {
 				clientSocket = serverSocket.accept();
+				
+				synchronized(sockets){
+					sockets.add(clientSocket);
+					}
+				
 				SocketHandler handlerThread = new SocketHandler(clientSocket,sockets);
 				handlerThread.start();
 						
-						synchronized(sockets){
-						sockets[index++] = clientSocket;
-						}
+						
 						
 					
 
@@ -49,7 +53,7 @@ public class Server extends Thread {
 
 
 
-	public Socket[] getSockets() {
+	public List<Socket> getSockets() {
 		return sockets;
 	}
 

@@ -82,7 +82,7 @@ public class Client {
 				out = socket.getOutputStream();
 			}
 			PrintWriter writer = new PrintWriter(out);
-			writer.println("game results");
+			//writer.println("game results");
 			for (String word : wordList) {
 				writer.print(word + "\n");
 				writer.flush();

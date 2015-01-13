@@ -9,17 +9,18 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SocketHandler extends Thread {
 
 	private Dictionary dictionary;
 	public Socket clientSocket;
-	private Socket[] sockets;
+	private List<Socket> sockets;
 	private BoggleDice dice;
+	private static int pair = 0;
 
-	public SocketHandler(Socket clientSocket, Socket[] sockets)
-			throws FileNotFoundException {
+	public SocketHandler(Socket clientSocket, List<Socket> sockets) throws FileNotFoundException {
 		dice = new BoggleDice();
 		this.sockets = sockets;
 		this.clientSocket = clientSocket;
@@ -33,19 +34,20 @@ public class SocketHandler extends Thread {
 		InputStream in;
 		try {
 			in = clientSocket.getInputStream();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				System.out.println(line);
 				if (line.equals("start game")) {
+					pair++;
 
-					// if (sockets.length % 2 == 0) {
-					// comment it out to test on one
-					sendBoardToClients();
-					// }
+					if (pair == 2) {
 
-				} else if (line.equals("game results")) {// clients are
+						sendBoardToClients();
+						pair = 0;//reset pair
+					}
+
+				} else  {// clients are
 					// sending
 					// results of
 					// game
@@ -66,27 +68,26 @@ public class SocketHandler extends Thread {
 	// inside of it...
 
 	public void sendBoardToClients() throws IOException {
-		System.out.println("got here");
+		System.out.println("send board");
 		String[] boardLetters = getBoard();
 		OutputStream out;
 
-		/*
-		 * for (Socket c : sockets) { try { out = c.getOutputStream();
-		 */
-		try {
-			out = clientSocket.getOutputStream();
-			PrintWriter writer = new PrintWriter(out);
-			for (String letter : boardLetters) {
-				writer.println(letter);
-				System.out.println(letter);
-				writer.flush();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (Socket c : sockets) {
 
+			try {
+				out = c.getOutputStream();
+				PrintWriter writer = new PrintWriter(out);
+				for (String letter : boardLetters) {
+					writer.println(letter);
+					System.out.println(letter);
+					writer.flush();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
 		}
-		// }
 
 	}
 
@@ -96,11 +97,10 @@ public class SocketHandler extends Thread {
 		int player1Points = 0;
 		int player2Points = 0;
 		Map<String, Socket> playersValidWords = new HashMap<String, Socket>();
-
+        System.out.println("Checking for winner");
 		for (Socket c : sockets) {
 			InputStream in = c.getInputStream();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String word;
 			int points;
 			while ((word = reader.readLine()) != null) {
@@ -111,7 +111,7 @@ public class SocketHandler extends Thread {
 						} else {
 							playersValidWords.put(word, c);
 							points = getWordPoints(word);
-							player2Points+=points;
+							player2Points += points;
 						}
 					} else {
 						playersValidWords.put(word, c);
@@ -123,7 +123,7 @@ public class SocketHandler extends Thread {
 		}
 
 		for (String word : playersValidWords.keySet()) {
-			if ((playersValidWords.get(word)).equals(sockets[0])) {
+			if ((playersValidWords.get(word)).equals(sockets.get(0))) {
 				player1Points++;
 			}
 		}
@@ -134,7 +134,9 @@ public class SocketHandler extends Thread {
 		} else {
 			winner = "Player2";
 		}
-
+		System.out.println("1 " + player1Points);
+		System.out.println("2 " + player2Points);
+        System.out.println(winner);
 		sendResultsToClients(winner, player1Points, player2Points);
 
 		/*
@@ -144,11 +146,10 @@ public class SocketHandler extends Thread {
 		 */
 	}
 
-	public void sendResultsToClients(String winner, int player1Points,
-			int player2Points) throws IOException {
+	public void sendResultsToClients(String winner, int player1Points, int player2Points) throws IOException {
 		OutputStream out = null;
-		for (int i = 0; i < sockets.length; i++) {
-			out = sockets[i].getOutputStream();
+		for (int i = 0; i < sockets.size(); i++) {
+			out = sockets.get(i).getOutputStream();
 			out.write("Winner is".getBytes());
 			out.write(winner.getBytes());
 
