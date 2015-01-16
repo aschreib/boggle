@@ -7,21 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server extends Thread {
-
-	// may want to split this up into 2 classes
-
-	// must be multi-threaded to be able to connect to 2 clients
-
-
-	private List<Socket> sockets; // game is played with exactly 2 clients
-
+	
 	private ServerSocket serverSocket;
+	private List<Socket> sockets; // game is played with exactly 2 clients
+	private List<SocketHandler> socketHandlers;
+	private Evaluator evaluator;
 
-	// either have constructor or main to open connection - I think we should
-	// use a main, added one below
+	private String[] boggleBoard;
+	
+	private int numGamesStarted;
+	
+		
 	public Server() throws IOException {
 		serverSocket = new ServerSocket(8080);
         sockets = new ArrayList<Socket>();
+        socketHandlers = new ArrayList<SocketHandler>();
+        evaluator = new Evaluator();
+        boggleBoard = new BoggleDice().getLetters();
+        numGamesStarted = 0;
 
 	}
 
@@ -37,7 +40,8 @@ public class Server extends Thread {
 					sockets.add(clientSocket);
 					}
 				
-				SocketHandler handlerThread = new SocketHandler(clientSocket,sockets);
+				SocketHandler handlerThread = new SocketHandler(this, clientSocket);
+				socketHandlers.add(handlerThread);
 				handlerThread.start();
 						
 						
@@ -56,10 +60,32 @@ public class Server extends Thread {
 	public List<Socket> getSockets() {
 		return sockets;
 	}
+	
+	public Evaluator getEvaluator(){
+		return evaluator;
+	}
 
 
 	public ServerSocket getServerSocket() {
 		return serverSocket;
+	}
+	
+	public String[] getBoard() {
+		return boggleBoard;
+	}
+	
+
+	public int getNumGamesStarted() {
+		return numGamesStarted;
+	}
+
+	public void incrementNumGamesStarted() throws IOException {
+		numGamesStarted++;
+		if(numGamesStarted == 2){
+			for(SocketHandler h : socketHandlers){
+				h.sendBoardToClient();
+			}
+		}
 	}
 
 	public static void main(String[] args) throws IOException {

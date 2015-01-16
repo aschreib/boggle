@@ -75,18 +75,20 @@ public class Client {
 	}
 
 	public void sendWords() {
-		ArrayList<String> wordList = gui.getInputPanel().getSubmitPanel().getWordList();
-		// when time is up sends list to server
 		try {
+			StringBuilder list = new StringBuilder();
+			ArrayList<String> words = gui.getInputPanel().getSubmitPanel().getWordList();
+			for (String word : words) {
+				list.append(word + " ");
+			}
 			if (out == null) {
 				out = socket.getOutputStream();
 			}
-			PrintWriter writer = new PrintWriter(out);
-			//writer.println("game results");
-			for (String word : wordList) {
-				writer.print(word + "\n");
-				writer.flush();
-			}
+			// PrintWriter writer = new PrintWriter(out);
+			// writer.println("game results");
+			out.write(list.toString().getBytes());
+			out.flush();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
