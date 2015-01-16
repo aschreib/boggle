@@ -62,13 +62,6 @@ public class Client {
 
 	}
 
-	/*
-	 * public void createBoard() throws IOException { //get letters from server
-	 * // after gets board from server, calls this method
-	 * 
-	 * gui.createBoard(board); }
-	 */
-
 	public void addWord(String word) {
 		// adds word to list
 		words.add(word);
@@ -78,14 +71,14 @@ public class Client {
 		try {
 			StringBuilder list = new StringBuilder();
 			ArrayList<String> words = gui.getInputPanel().getSubmitPanel().getWordList();
+			
 			for (String word : words) {
 				list.append(word + " ");
 			}
 			if (out == null) {
 				out = socket.getOutputStream();
 			}
-			// PrintWriter writer = new PrintWriter(out);
-			// writer.println("game results");
+			
 			out.write(list.toString().getBytes());
 			out.flush();
 
