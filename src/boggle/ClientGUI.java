@@ -1,6 +1,7 @@
 package boggle;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 public class ClientGUI extends JFrame {
@@ -70,6 +71,11 @@ public class ClientGUI extends JFrame {
 		sp.getSubmitWord().setEnabled(false);
 		sp.getClear().setEnabled(false);
 		boggleBoard.toggleButtons(false);
+	}
+
+	public void showResults(String[] results) {
+		JOptionPane.showMessageDialog(null, results[0] + "\nYour Points: " + results[1]);
+		
 	}
 
 }

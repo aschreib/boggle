@@ -29,25 +29,28 @@ public class SocketHandler extends Thread {
 
 		System.out.println("connected to " + clientSocket.getPort());
 
-		InputStream in;
+
 		try {
-			in = clientSocket.getInputStream();
+			
+			
+			InputStream in = clientSocket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			
-			String line;
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-				if (line.equals("start game")) {
-					server.incrementNumGamesStarted();
-				} else {
-					System.out.println("eval");// clients are
-					// sending
-					// results of
-					// game
-					evaluate(line); // line has all the words
-				}
+				String line;
+				while ((line = reader.readLine()) != null) {
+					System.out.println(line);
+					if (line.equals("start game")) {
+						server.incrementNumGamesStarted();
+					} else {
+						System.out.println("eval");// clients are
+						// sending
+						// results of
+						// game
+						evaluate(line); // line has all the words
+					}
 
-			}
+				}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,10 +82,8 @@ public class SocketHandler extends Thread {
 	public void sendResultsToClient(String status, int playerPoints) throws IOException {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
-		
-		writer.println(status.getBytes());
-		writer.println("Your Points ".getBytes());
-		writer.print(playerPoints);
+
+		writer.println(status + " ".getBytes() + playerPoints);
 		writer.flush();
 
 	}
