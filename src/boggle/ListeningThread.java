@@ -37,7 +37,6 @@ public class ListeningThread extends Thread {
 					client.getGui().createBoard(letters);
 					Timer timer = new Timer(client);
 					timer.startTimer();
-
 				} else {
 					System.out.println("waiting for results");
 					String[] results = reader.readLine().split(" ");

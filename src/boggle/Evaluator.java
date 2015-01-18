@@ -46,10 +46,10 @@ public class Evaluator {
 			String[] wordList = entry.getValue();
 			for (String word : wordList) {
 				if (dictionary.exists(word)) {
-					System.out.println("checking in dictionary...");
+					//System.out.println("checking in dictionary...");
 					if (playerNum == 1) {
 						comparePlayerWords.add(word);
-						System.out.println("added: " + word);
+						//System.out.println("added: " + word);
 					} else {// player 2
 						if (comparePlayerWords.contains(word)) {
 							comparePlayerWords.remove(word);
@@ -82,7 +82,6 @@ public class Evaluator {
 		SocketHandler socketHandler;
 		iter = clientLists.entrySet().iterator(); // reset iter
 		while (iter.hasNext()) {
-			System.out.println("got into iter");
 			socketHandler = iter.next().getKey();
 
 			switch (winner) {

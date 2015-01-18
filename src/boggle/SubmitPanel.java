@@ -42,7 +42,7 @@ public class SubmitPanel extends JPanel {
 
 				// need to submit word
 				wordList.add(wordToSubmitField.getText());
-				System.out.println("Word added: " + wordToSubmitField.getText());
+				//System.out.println("Word added: " + wordToSubmitField.getText());
 
 				// reset text field and buttons
 				reset();

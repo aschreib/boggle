@@ -46,7 +46,6 @@ public class SocketHandler extends Thread {
 					// clients are sending results of game
 					evaluate(line); // line has all the words
 				}
-
 			}
 
 		} catch (IOException e) {
