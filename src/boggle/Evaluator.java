@@ -23,7 +23,11 @@ public class Evaluator {
 	public void receiveList(SocketHandler handler, String[] clientList) throws IOException {
 		clientLists.put(handler, clientList);
 		if (clientLists.size() == 2) {
+			System.out.println("received list 2");
 			checkForWinner();
+		}
+		else{
+			System.out.println("received list 1");
 		}
 	}
 
@@ -41,8 +45,10 @@ public class Evaluator {
 			String[] wordList = entry.getValue();
 			for (String word : wordList) {
 				if (dictionary.exists(word)) {
+					System.out.println("checking in dictionary...");
 					if (playerNum == 1) {
 						comparePlayerWords.add(word);
+						System.out.println("added: " + word);
 					} else {// player 2
 						if (comparePlayerWords.contains(word)) {
 							comparePlayerWords.remove(word);
@@ -63,12 +69,14 @@ public class Evaluator {
 		String winner;
 		if (player1Points > player2Points) {
 			winner = "1";
-		} else {
+		} else if(player2Points > player1Points){
 			winner = "2";
+		} else{
+			winner = "TIE";
 		}
-		System.out.println("1 " + player1Points);
-		System.out.println("2 " + player2Points);
-		System.out.println(winner);
+		System.out.println("Player 1's points: " + player1Points);
+		System.out.println("Player 2's points " + player2Points);
+		System.out.println("Winner: " + winner);
 
 		SocketHandler socketHandler;
 		while (iter.hasNext()) {
@@ -84,14 +92,23 @@ public class Evaluator {
 				}
 				break;
 			case "2":
-				if (playerNum == 2) {
+				if (playerNum == 1) {
 					socketHandler.sendResultsToClient("loser", player1Points);
 					playerNum++;
 				} else {// player 2
 					socketHandler.sendResultsToClient("winner", player2Points);
 				}
 				break;
+			case "TIE":
+				if (playerNum == 1) {
+					socketHandler.sendResultsToClient("TIE", player1Points);
+					playerNum++;
+				} else {// player 2
+					socketHandler.sendResultsToClient("TIE", player2Points);
+				}
+				break;
 			}
+			
 		}
 
 	}
