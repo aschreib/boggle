@@ -21,17 +21,17 @@ public class ListeningThread extends Thread {
 		String[] letters = new String[16];
 
 		try {
-				InputStream input = socket.getInputStream();
-				String line;
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(input));
-
+			InputStream input = socket.getInputStream();
+			String line;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					input));
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
 				if (letters[0] == null) {
+					String[] letterList = line.split(" ");
 					int letterPos = 0;
 					for (int letterNum = 0; letterNum < 16; letterNum++) {
-						if ((line = reader.readLine()) != null) {
-							letters[letterPos++] = line;
-						}
+						letters[letterPos++] = letterList[letterNum];
 					}
 
 					client.getGui().createBoard(letters);
@@ -44,7 +44,8 @@ public class ListeningThread extends Thread {
 					System.out.println("read results");
 					client.getGui().showResults(results);
 				}
-		
+			}
+
 		} catch (InterruptedException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

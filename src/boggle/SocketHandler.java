@@ -58,10 +58,12 @@ public class SocketHandler extends Thread {
 	public void sendBoardToClient() throws IOException {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
+		StringBuilder letters = new StringBuilder();
 		for (String letter : boggleBoard) {
-			writer.println(letter);
-			writer.flush();
+			letters.append(letter + " ");
 		}
+		writer.println(letters);
+		writer.flush();
 
 	}
 
