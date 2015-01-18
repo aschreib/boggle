@@ -79,7 +79,6 @@ public class Client {
 			}
 			
 			out.write(list.toString().getBytes());
-			System.out.println(list.toString());
 			out.close();
 
 		} catch (IOException e) {
