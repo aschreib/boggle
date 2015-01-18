@@ -27,6 +27,7 @@ public class ListeningThread extends Thread {
 			InputStream input = socket.getInputStream();
 			String line;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+			
 			if(letters[0]==null){
 			int letterPos = 0;
 			for(int letterNum = 0; letterNum < 16; letterNum++){
@@ -38,6 +39,7 @@ public class ListeningThread extends Thread {
 			client.getGui().createBoard(letters);
 			Timer timer = new Timer(client);
 			timer.startTimer();
+			
 			}else{
 				String[] results = reader.readLine().split(" ");
 				client.getGui().showResults(results);

@@ -80,7 +80,7 @@ public class Client {
 			}
 			
 			out.write(list.toString().getBytes());
-			out.flush();
+			out.close();;
 
 		} catch (IOException e) {
 			e.printStackTrace();
