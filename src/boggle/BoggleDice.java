@@ -18,7 +18,7 @@ public class BoggleDice {
 				{ "T", "S", "T", "I", "Y", "D" }, { "O", "B", "J", "O", "A", "B" }, { "O", "W", "T", "O", "A", "T" },
 				{ "I", "O", "T", "M", "U", "C" }, { "E", "R", "T", "T", "Y", "L" }, { "R", "Y", "V", "D", "E", "L" },
 				{ "T", "O", "E", "S", "S", "I" }, { "L", "R", "E", "I", "X", "D" }, { "T", "E", "R", "W", "H", "V" },
-				{ "E", "I", "U", "N", "E", "S" }, { "N", "U", "I", "H", "M", "Qu" } };
+				{ "E", "I", "U", "N", "E", "S" }, { "N", "U", "I", "H", "M", "QU" } };
 		// instantiate 2 dimensional array and hard-code letters in
 
 	}

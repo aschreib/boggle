@@ -28,11 +28,11 @@ public class Server extends Thread {
 	}
 
 	public void run() {
-		Socket clientSocket;
+
 
 		try {
 			while (true) {
-				clientSocket = serverSocket.accept();
+				Socket clientSocket = serverSocket.accept();
 
 				SocketHandler handlerThread = new SocketHandler(this, clientSocket);
 				socketHandlers.add(handlerThread);

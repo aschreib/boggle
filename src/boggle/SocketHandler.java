@@ -29,14 +29,13 @@ public class SocketHandler extends Thread {
 
 		System.out.println("connected to " + clientSocket.getPort());
 
-
 		try {
-			
-			
+
 			InputStream in = clientSocket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+			String line;
 			
-				String line;
 				while ((line = reader.readLine()) != null) {
 					System.out.println(line);
 					if (line.equals("start game")) {
@@ -51,6 +50,7 @@ public class SocketHandler extends Thread {
 
 				}
 			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +63,6 @@ public class SocketHandler extends Thread {
 		PrintWriter writer = new PrintWriter(out);
 		for (String letter : boggleBoard) {
 			writer.println(letter);
-			System.out.print(letter);
 			writer.flush();
 		}
 
@@ -73,9 +72,6 @@ public class SocketHandler extends Thread {
 		// convert string to list
 		// send to evaluator
 		String[] words = gameResults.split(" ");
-		for (String word : words) {
-			System.out.println(word);
-		}
 		evaluator.receiveList(this, words);
 	}
 
