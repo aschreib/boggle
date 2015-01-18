@@ -25,10 +25,7 @@ public class Dictionary {
 		System.out.println("MADE DICTIONARY with " + numWords + " words");
 	}
 
-
-
 	public boolean exists(String word) {
-
 		return wordList.contains(word.toLowerCase());
 	}
 

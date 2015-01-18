@@ -2,7 +2,6 @@ package boggle;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class Client {
 			}
 			
 			out.write(list.toString().getBytes());
-			out.close();;
+			out.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();

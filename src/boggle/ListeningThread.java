@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
-
 public class ListeningThread extends Thread {
 
 	private Socket socket;
@@ -22,33 +20,32 @@ public class ListeningThread extends Thread {
 	public void run() {
 		String[] letters = new String[16];
 
-
 		try {
-			InputStream input = socket.getInputStream();
-			String line;
-			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-			
-			if(letters[0]==null){
-			int letterPos = 0;
-			for(int letterNum = 0; letterNum < 16; letterNum++){
-				if((line = reader.readLine())!=null){
-					letters[letterPos++] = line;
+				InputStream input = socket.getInputStream();
+				String line;
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(input));
+
+				if (letters[0] == null) {
+					int letterPos = 0;
+					for (int letterNum = 0; letterNum < 16; letterNum++) {
+						if ((line = reader.readLine()) != null) {
+							letters[letterPos++] = line;
+						}
+					}
+
+					client.getGui().createBoard(letters);
+					Timer timer = new Timer(client);
+					timer.startTimer();
+
+				} else {
+					System.out.println("waiting for results");
+					String[] results = reader.readLine().split(" ");
+					System.out.println("read results");
+					client.getGui().showResults(results);
 				}
-			}
-
-			client.getGui().createBoard(letters);
-			Timer timer = new Timer(client);
-			timer.startTimer();
-			
-			}else{
-				String[] results = reader.readLine().split(" ");
-				client.getGui().showResults(results);
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		
+		} catch (InterruptedException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

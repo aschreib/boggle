@@ -20,13 +20,13 @@ public class Evaluator {
 		dictionary = new Dictionary();
 	}
 
-	public void receiveList(SocketHandler handler, String[] clientList) throws IOException {
+	public void receiveList(SocketHandler handler, String[] clientList)
+			throws IOException {
 		clientLists.put(handler, clientList);
 		if (clientLists.size() == 2) {
 			System.out.println("received list 2");
 			checkForWinner();
-		}
-		else{
+		} else {
 			System.out.println("received list 1");
 		}
 	}
@@ -38,7 +38,8 @@ public class Evaluator {
 		int player2Points = 0;
 		List<String> comparePlayerWords = new ArrayList<String>();
 		System.out.println("Checking for winner");
-		Iterator<Entry<SocketHandler, String[]>> iter = clientLists.entrySet().iterator();
+		Iterator<Entry<SocketHandler, String[]>> iter = clientLists.entrySet()
+				.iterator();
 
 		while (iter.hasNext()) {
 			Entry<SocketHandler, String[]> entry = iter.next();
@@ -69,9 +70,9 @@ public class Evaluator {
 		String winner;
 		if (player1Points > player2Points) {
 			winner = "1";
-		} else if(player2Points > player1Points){
+		} else if (player2Points > player1Points) {
 			winner = "2";
-		} else{
+		} else {
 			winner = "TIE";
 		}
 		System.out.println("Player 1's points: " + player1Points);
@@ -79,7 +80,9 @@ public class Evaluator {
 		System.out.println("Winner: " + winner);
 
 		SocketHandler socketHandler;
+		iter = clientLists.entrySet().iterator(); // reset iter
 		while (iter.hasNext()) {
+			System.out.println("got into iter");
 			socketHandler = iter.next().getKey();
 
 			switch (winner) {
@@ -108,7 +111,7 @@ public class Evaluator {
 				}
 				break;
 			}
-			
+
 		}
 
 	}

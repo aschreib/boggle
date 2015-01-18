@@ -16,7 +16,8 @@ public class SocketHandler extends Thread {
 	private Evaluator evaluator;
 	private String[] boggleBoard;
 
-	public SocketHandler(Server server, Socket clientSocket) throws FileNotFoundException {
+	public SocketHandler(Server server, Socket clientSocket)
+			throws FileNotFoundException {
 
 		this.server = server;
 		this.clientSocket = clientSocket;
@@ -32,24 +33,21 @@ public class SocketHandler extends Thread {
 		try {
 
 			InputStream in = clientSocket.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
 
 			String line;
-			
-				while ((line = reader.readLine()) != null) {
-					System.out.println(line);
-					if (line.equals("start game")) {
-						server.incrementNumGamesStarted();
-					} else {
-						System.out.println("eval");// clients are
-						// sending
-						// results of
-						// game
-						evaluate(line); // line has all the words
-					}
 
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+				if (line.equals("start game")) {
+					server.incrementNumGamesStarted();
+				} else {
+					// clients are sending results of game
+					evaluate(line); // line has all the words
 				}
-			
+
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -58,7 +56,6 @@ public class SocketHandler extends Thread {
 	}
 
 	public void sendBoardToClient() throws IOException {
-		System.out.println("send board");
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
 		for (String letter : boggleBoard) {
@@ -75,13 +72,16 @@ public class SocketHandler extends Thread {
 		evaluator.receiveList(this, words);
 	}
 
-	public void sendResultsToClient(String status, int playerPoints) throws IOException {
+	public void sendResultsToClient(String status, int playerPoints)
+			throws IOException {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
-		
-		writer.println(status + " ".getBytes() + playerPoints);
-		writer.flush();
 
+		writer.println(status + " ".getBytes() + playerPoints);
+		System.out.println(status + "- points: " + playerPoints);
+		writer.flush();
+		out.close();
+		System.out.println("sent results to client");
 	}
 
 }

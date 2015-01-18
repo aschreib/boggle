@@ -17,7 +17,7 @@ public class Timer extends Thread {
 
 		startTime = new GregorianCalendar();
 		endTime = new GregorianCalendar();
-		endTime.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE) + 3);
+		endTime.set(Calendar.SECOND, startTime.get(Calendar.SECOND) + 30);
 		this.start();
 
 	}
