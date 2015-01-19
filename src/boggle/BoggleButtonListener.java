@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 public class BoggleButtonListener implements ActionListener {
 
@@ -15,7 +14,6 @@ public class BoggleButtonListener implements ActionListener {
 	public ClientGUI gui;
 	public BoggleBoardPanel boardPanel;
 	public SubmitPanel submitPanel;
-	public JTextField buildingWord;
 	public StringBuilder stringBuilder;
 	private boolean[][] alreadyClicked;
 
@@ -30,21 +28,22 @@ public class BoggleButtonListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		// set button clicked = true
 		alreadyClicked[rowNum][columnNum] = true;
 
-		// append letter to buildingWord
-		gui = boardPanel.getGui();
-		submitPanel = gui.getInputPanel().getSubmitPanel();
+		// word to submit
+		submitPanel = boardPanel.getGui().getInputPanel().getSubmitPanel();
 		submitPanel.getSubmitWord().setEnabled(true);
 		submitPanel.getClear().setEnabled(true);
-		buildingWord = submitPanel.getWordToSubmit();
-		stringBuilder = new StringBuilder(buildingWord.getText());
+		stringBuilder = new StringBuilder(submitPanel.getWordToSubmit().getText());
 		stringBuilder.append(button.getText());
 		submitPanel.setWordToSubmit(stringBuilder.toString());
 
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		// set only those buttons that are adjacent and haven't yet been
+		// clicked, clickable
+		int size = BoggleBoardPanel.getBoardSize();
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
 				JButton currentButton = boardPanel.getBoard()[i][j];
 				if (adjacentRow(i) && adjacentColumn(j) && !alreadyClicked[i][j]) {
 					currentButton.setEnabled(true);

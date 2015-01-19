@@ -1,5 +1,6 @@
 package boggle;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -17,7 +18,7 @@ public class Timer extends Thread {
 
 		startTime = new GregorianCalendar();
 		endTime = new GregorianCalendar();
-		endTime.set(Calendar.SECOND, startTime.get(Calendar.SECOND) + 30);
+		endTime.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE) + 3);
 		this.start();
 
 	}
@@ -56,7 +57,13 @@ public class Timer extends Thread {
 		}
 		// game over
 		client.getGui().disableButtons();
-		client.sendWords();// send words to server because timer is up
+
+		try {
+			// send words to server because timer is up
+			client.sendWords();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

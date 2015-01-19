@@ -18,7 +18,6 @@ public class WordsPanel extends JPanel {
 		this.setGui(gui);
 
 		wordsLabel = "Selected Words:";
-		// wordsLabel.setFont(new Font(Font.SERIF, Font.BOLD, 15));
 		selectedWords = new JTextArea();
 		selectedWords.setFont(new Font(Font.SERIF, Font.BOLD, 12));
 

@@ -73,7 +73,6 @@ public class TimePanel extends JPanel {
 			try {
 				gui.getClient().startGame("start game\n");
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			startGame.setEnabled(false);

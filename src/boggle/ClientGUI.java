@@ -61,9 +61,7 @@ public class ClientGUI extends JFrame {
 	}
 
 	public void createBoard(String[] board) {
-
 		boggleBoard.setBoard(board);
-
 	}
 
 	public void disableButtons() {

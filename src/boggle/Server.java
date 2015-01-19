@@ -9,7 +9,7 @@ import java.util.List;
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private List<Socket> sockets; // game is played with exactly 2 clients
+	private List<Socket> sockets;
 	private List<SocketHandler> socketHandlers;
 	private Evaluator evaluator;
 
@@ -29,7 +29,6 @@ public class Server extends Thread {
 
 	public void run() {
 
-
 		try {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
@@ -45,7 +44,6 @@ public class Server extends Thread {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -81,9 +79,14 @@ public class Server extends Thread {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		Server server = new Server();
-		server.run();
+	public static void main(String[] args) {
+		Server server;
+		try {
+			server = new Server();
+			server.run();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

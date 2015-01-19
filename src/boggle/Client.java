@@ -8,30 +8,21 @@ import java.util.ArrayList;
 
 public class Client {
 
-	// this class interacts with the Server - have to include this code in this
-	// class
-
-	// this structure is just a suggestion - split between Client and ClientGUI
-	// - we can change it
-
-	// from server
-	private ArrayList<String> words; // chosen by player
-	private Timer timer;
-	public ClientGUI gui;
+	private ClientGUI gui;
 	private Socket socket;
-	private OutputStream out;
+	private Timer timer;
+	private ArrayList<String> playersWords;
 
 	public Client() throws UnknownHostException, IOException {
-		ClientGUI gui = new ClientGUI(this);
+		gui = new ClientGUI(this);
 		gui.setVisible(true);
-		this.gui = gui;
 		socket = new Socket("127.0.0.1", 8080);
-		words = new ArrayList<String>();
+		playersWords = new ArrayList<String>();
 
 	}
 
 	public ArrayList<String> getWords() {
-		return words;
+		return playersWords;
 	}
 
 	public Timer getTimer() {
@@ -46,14 +37,9 @@ public class Client {
 		return socket;
 	}
 
-	public OutputStream getOut() {
-		return out;
-	}
-
 	public void startGame(String start) throws IOException {
-		if (out == null) {// outputstream is only set once in a game
-			out = socket.getOutputStream();
-		}
+
+		OutputStream out = socket.getOutputStream();
 		out.write(start.getBytes());
 		out.flush();
 		ListeningThread thread = new ListeningThread(socket, this);
@@ -62,33 +48,30 @@ public class Client {
 	}
 
 	public void addWord(String word) {
-		// adds word to list
-		words.add(word);
+		playersWords.add(word);
 	}
 
-	public void sendWords() {
-		try {
-			StringBuilder list = new StringBuilder();
-			ArrayList<String> words = gui.getInputPanel().getSubmitPanel().getWordList();
-			
-			for (String word : words) {
-				list.append(word + " ");
-			}
-			if (out == null) {
-				out = socket.getOutputStream();
-			}
-			
-			out.write(list.toString().getBytes());
-			//System.out.println(list.toString());
-			socket.shutdownOutput();
+	public void sendWords() throws IOException {
 
+		StringBuilder list = new StringBuilder();
+		ArrayList<String> words = gui.getInputPanel().getSubmitPanel().getWordList();
+
+		for (String word : words) {
+			list.append(word + " ");
+		}
+
+		OutputStream out = socket.getOutputStream();
+		out.write(list.toString().getBytes());
+		socket.shutdownOutput();
+
+	}
+
+	public static void main(String[] args) {
+		try {
+			new Client();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		new Client();
 	}
 
 }

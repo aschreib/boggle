@@ -16,8 +16,7 @@ public class SocketHandler extends Thread {
 	private Evaluator evaluator;
 	private String[] boggleBoard;
 
-	public SocketHandler(Server server, Socket clientSocket)
-			throws FileNotFoundException {
+	public SocketHandler(Server server, Socket clientSocket) throws FileNotFoundException {
 
 		this.server = server;
 		this.clientSocket = clientSocket;
@@ -28,28 +27,23 @@ public class SocketHandler extends Thread {
 
 	public void run() {
 
-		System.out.println("connected to " + clientSocket.getPort());
-
 		try {
 
 			InputStream in = clientSocket.getInputStream();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
 			String line;
 
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
 				if (line.equals("start game")) {
 					server.incrementNumGamesStarted();
 				} else {
 					// clients are sending results of game
-					evaluate(line); // line has all the words
+					evaluate(line);
 				}
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -67,22 +61,17 @@ public class SocketHandler extends Thread {
 	}
 
 	public void evaluate(String gameResults) throws IOException {
-		// convert string to list
-		// send to evaluator
 		String[] words = gameResults.split(" ");
 		evaluator.receiveList(this, words);
 	}
 
-	public void sendResultsToClient(String status, int playerPoints)
-			throws IOException {
+	public void sendResultsToClient(String status, int playerPoints) throws IOException {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
 
 		writer.println(status + " " + String.valueOf(playerPoints));
-		System.out.println(status);
 		writer.flush();
 		out.close();
-		System.out.println("sent results to client");
 	}
 
 }

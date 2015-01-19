@@ -13,30 +13,33 @@ public class Evaluator {
 
 	// use a HashMap so know which list belongs to which client
 	private Map<SocketHandler, String[]> clientLists;
+	private Iterator<Entry<SocketHandler, String[]>> iter;
 	private Dictionary dictionary;
+
+	private int playerNum;
+	private int player1Points;
+	private int player2Points;
 
 	public Evaluator() throws FileNotFoundException {
 		clientLists = new HashMap<SocketHandler, String[]>();
 		dictionary = new Dictionary();
+		iter = null;
+
+		playerNum = 1;
+		player1Points = 0;
+		player2Points = 0;
 	}
 
 	public void receiveList(SocketHandler handler, String[] clientList) throws IOException {
 		clientLists.put(handler, clientList);
 		if (clientLists.size() == 2) {
-			System.out.println("received list 2");
-			checkForWinner();
-		} else {
-			System.out.println("received list 1");
+			setPoints();
 		}
 	}
 
-	public void checkForWinner() throws IOException {
+	public void setPoints() throws IOException {
 
-		int playerNum = 1;
-		int player1Points = 0;
-		int player2Points = 0;
 		List<String> comparePlayerWords = new ArrayList<String>();
-		System.out.println("Checking for winner");
 		Iterator<Entry<SocketHandler, String[]>> iter = clientLists.entrySet().iterator();
 
 		while (iter.hasNext()) {
@@ -44,10 +47,9 @@ public class Evaluator {
 			String[] wordList = entry.getValue();
 			for (String word : wordList) {
 				if (dictionary.exists(word)) {
-					//System.out.println("checking in dictionary...");
 					if (playerNum == 1) {
+						// nothing to compare to, so just add words
 						comparePlayerWords.add(word);
-						//System.out.println("added: " + word);
 					} else {// player 2
 						if (comparePlayerWords.contains(word)) {
 							comparePlayerWords.remove(word);
@@ -59,56 +61,26 @@ public class Evaluator {
 			}
 			playerNum++;
 		}
+
 		playerNum = 1;
 		for (String word : comparePlayerWords) {
 			player1Points += getWordPoints(word);
-
 		}
 
-		String winner;
-		if (player1Points > player2Points) {
-			winner = "1";
-		} else if (player2Points > player1Points) {
-			winner = "2";
-		} else {
-			winner = "TIE";
-		}
-		System.out.println("Player 1's points: " + player1Points);
-		System.out.println("Player 2's points " + player2Points);
-		System.out.println("Winner: " + winner);
-
-		SocketHandler socketHandler1 = null;
-		SocketHandler socketHandler2 = null;
-		iter = clientLists.entrySet().iterator(); // reset iter
-		while (iter.hasNext()) {
-			if (playerNum == 1) {
-				socketHandler1 = iter.next().getKey();
-				playerNum++;
-			} else {
-				socketHandler2 = iter.next().getKey();
-			}
-		}
-		switch (winner) {
-		case "1":
-			socketHandler1.sendResultsToClient("winner", player1Points);
-			socketHandler2.sendResultsToClient("loser", player2Points);
-			break;
-		case "2":
-			socketHandler1.sendResultsToClient("loser", player1Points);
-			socketHandler2.sendResultsToClient("winner", player2Points);
-			break;
-		case "TIE":
-			socketHandler1.sendResultsToClient("TIE", player1Points);
-			socketHandler2.sendResultsToClient("TIE", player2Points);
-			break;
-		}
+		setWinner();
 
 	}
 
 	public int getWordPoints(String word) {
 		int pointValue = 0;
 		int wordLength = word.length();
+
 		switch (wordLength) {
+
+		case 1:
+		case 2:
+			pointValue = 0;
+			break;
 		case 3:
 			pointValue = 1;
 			break;
@@ -135,5 +107,42 @@ public class Evaluator {
 		return pointValue;
 	}
 
-}
+	public void setWinner() throws IOException {
 
+		String winner;
+		if (player1Points > player2Points) {
+			winner = "1";
+		} else if (player2Points > player1Points) {
+			winner = "2";
+		} else {
+			winner = "TIE";
+		}
+
+		SocketHandler socketHandler1 = null;
+		SocketHandler socketHandler2 = null;
+		iter = clientLists.entrySet().iterator(); // reset iter
+		while (iter.hasNext()) {
+			if (playerNum == 1) {
+				socketHandler1 = iter.next().getKey();
+				playerNum++;
+			} else {
+				socketHandler2 = iter.next().getKey();
+			}
+		}
+		switch (winner) {
+		case "1":
+			socketHandler1.sendResultsToClient("winner", player1Points);
+			socketHandler2.sendResultsToClient("loser", player2Points);
+			break;
+		case "2":
+			socketHandler1.sendResultsToClient("loser", player1Points);
+			socketHandler2.sendResultsToClient("winner", player2Points);
+			break;
+		case "TIE":
+			socketHandler1.sendResultsToClient("TIE", player1Points);
+			socketHandler2.sendResultsToClient("TIE", player2Points);
+			break;
+		}
+	}
+
+}

@@ -9,7 +9,7 @@ public class BoggleBoardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public static int SIZE = 4;
+	private static final int SIZE = 4;
 
 	private ClientGUI gui;
 	private JButton[][] board;
@@ -30,7 +30,7 @@ public class BoggleBoardPanel extends JPanel {
 		}
 	}
 
-	public static int getSIZE() {
+	public static int getBoardSize() {
 		return SIZE;
 	}
 
@@ -53,16 +53,8 @@ public class BoggleBoardPanel extends JPanel {
 		return gui;
 	}
 
-	public void setGui(ClientGUI gui) {
-		this.gui = gui;
-	}
-
 	public boolean[][] getAlreadyClicked() {
 		return alreadyClicked;
-	}
-
-	public void setAlreadyClicked(boolean[][] alreadyClicked) {
-		this.alreadyClicked = alreadyClicked;
 	}
 
 	public void resetClickedList() {
@@ -73,11 +65,6 @@ public class BoggleBoardPanel extends JPanel {
 		}
 	}
 
-	/*
-	 * public void disableAll() { for (int i = 0; i < SIZE; i++) { for (int j =
-	 * 0; j < SIZE; j++) { board[i][j].setEnabled(false); } } }
-	 */
-
 	public void toggleButtons(boolean enabled) {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -85,10 +72,5 @@ public class BoggleBoardPanel extends JPanel {
 			}
 		}
 	}
-
-	// when a button is clicked:
-	// 1)get letter and put it in UserInputPanel.SubmitPanel.wordToSubmitField
-	// 2)set any non adjacent buttons unclickable, all adjacent buttons should
-	// be clickable
 
 }

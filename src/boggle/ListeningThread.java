@@ -23,10 +23,8 @@ public class ListeningThread extends Thread {
 		try {
 			InputStream input = socket.getInputStream();
 			String line;
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					input));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
 				if (letters[0] == null) {
 					String[] letterList = line.split(" ");
 					int letterPos = 0;
@@ -44,7 +42,6 @@ public class ListeningThread extends Thread {
 			}
 
 		} catch (InterruptedException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
