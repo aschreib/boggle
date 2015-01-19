@@ -74,7 +74,7 @@ public class ClientGUI extends JFrame {
 	}
 
 	public void showResults(String[] results) {
-		JOptionPane.showMessageDialog(null, results[0] + "\nYour Points: " + results[1]);
+		JOptionPane.showMessageDialog(boggleBoard, "YOU ARE THE " + results[0].toUpperCase());
 		
 	}
 

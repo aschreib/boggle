@@ -78,8 +78,8 @@ public class SocketHandler extends Thread {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
 
-		writer.println(status + " ".getBytes() + playerPoints);
-		System.out.println(status + "- points: " + playerPoints);
+		writer.println(status);
+		System.out.println(status);
 		writer.flush();
 		out.close();
 		System.out.println("sent results to client");
