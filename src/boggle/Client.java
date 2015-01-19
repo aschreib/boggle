@@ -80,7 +80,7 @@ public class Client {
 			
 			out.write(list.toString().getBytes());
 			//System.out.println(list.toString());
-			out.close();
+			socket.shutdownOutput();
 
 		} catch (IOException e) {
 			e.printStackTrace();
