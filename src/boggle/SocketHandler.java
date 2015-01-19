@@ -78,7 +78,7 @@ public class SocketHandler extends Thread {
 		OutputStream out = clientSocket.getOutputStream();
 		PrintWriter writer = new PrintWriter(out);
 
-		writer.println(status);
+		writer.println(status + " " + String.valueOf(playerPoints));
 		System.out.println(status);
 		writer.flush();
 		out.close();
