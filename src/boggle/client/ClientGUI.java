@@ -1,4 +1,4 @@
-package boggle;
+package boggle.client;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

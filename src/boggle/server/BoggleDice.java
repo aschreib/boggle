@@ -1,4 +1,4 @@
-package boggle;
+package boggle.server;
 
 import java.util.Random;
 

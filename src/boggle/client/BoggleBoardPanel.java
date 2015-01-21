@@ -1,5 +1,6 @@
-package boggle;
+package boggle.client;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -43,7 +44,9 @@ public class BoggleBoardPanel extends JPanel {
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				board[i][j].setText(letters[position++]);
+				JButton currentButton = board[i][j];
+				currentButton.setText(letters[position++]);
+				currentButton.setFont(new Font(Font.SERIF, Font.BOLD, 50));
 			}
 		}
 

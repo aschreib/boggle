@@ -1,4 +1,4 @@
-package boggle;
+package boggle.client;
 
 import java.awt.BorderLayout;
 

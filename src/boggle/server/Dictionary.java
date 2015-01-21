@@ -1,17 +1,17 @@
-package boggle;
+package boggle.server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Dictionary {
 
-	private final List<String> wordList;
+	private Set<String> wordList;
 
 	public Dictionary() throws FileNotFoundException {
-		wordList = new ArrayList<String>();
+		wordList = new HashSet<String>();
 		Scanner inputFile = new Scanner(new File("./boggleDictionary.txt"));
 
 		while (inputFile.hasNext()) {

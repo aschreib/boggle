@@ -1,4 +1,4 @@
-package boggle;
+package boggle.server;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
